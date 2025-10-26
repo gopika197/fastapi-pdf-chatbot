@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block title %}Upload PDF{% endblock %}
+{% block content %}
+<div class="w-full max-w-lg bg-gray-800 p-8 rounded-lg shadow-lg">
+    <h1 class="text-2xl font-bold mb-6 text-center">Upload PDF & Ask Question</h1>
+    <form id="pdf-form" class="space-y-4">
+        <input type="file" id="pdf-file" accept=".pdf"
+               class="w-full p-3 rounded bg-gray-700 text-white focus:outline-none" required>
+        <input type="text" id="question" placeholder="Enter your question"
+               class="w-full p-3 rounded bg-gray-700 text-white focus:outline-none" required>
+        <button type="submit" class="w-full p-3 bg-purple-600 rounded hover:bg-purple-500 font-semibold">
+            Ask
+        </button>
+    </form>
+
+    <div id="answer-box" class="mt-6 p-4 bg-gray-700 rounded hidden">
+        <h2 class="font-bold mb-2">Answer:</h2>
+        <p id="answer-text"></p>
+    </div>
+</div>
+
+<script>
+document.getElementById("pdf-form").addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const fileInput = document.getElementById("pdf-file");
+    const questionInput = document.getElementById("question");
+    const formData = new FormData();
+    formData.append("file", fileInput.files[0]);
+    formData.append("question", questionInput.value);
+
+    const token = document.cookie.split("; ").find(row => row.startsWith("access_token="))?.split("=")[1];
+
+    const res = await fetch("/chat/answer", {
+        method: "POST",
+        headers: {
+            "Authorization": `Bearer ${token}`
+        },
+        body: formData
+    });
+
+    const data = await res.json();
+    const answerBox = document.getElementById("answer-box");
+    const answerText = document.getElementById("answer-text");
+
+    answerText.textContent = data.answer || "No answer received.";
+    answerBox.classList.remove("hidden");
+});
+</script>
+{% endblock %}

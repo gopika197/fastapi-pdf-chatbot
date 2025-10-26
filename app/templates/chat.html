@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PDF Chatbot</title>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.3.2/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-900 text-gray-200 min-h-screen flex items-center justify-center p-4">
+
+<div class="max-w-3xl w-full">
+    <h1 class="text-4xl font-bold text-center mb-8 text-white">PDF Chatbot</h1>
+    
+    <form id="chatForm" class="bg-gray-800 p-6 rounded-xl shadow-lg space-y-5">
+      <div>
+        <label class="block font-semibold mb-1">Upload PDF:</label>
+        <input type="file" id="pdfFile" accept="application/pdf" class="border border-gray-600 p-2 w-full rounded bg-gray-700 text-gray-200" required>
+      </div>
+      <div>
+        <label class="block font-semibold mb-1">Question:</label>
+        <input type="text" id="question" class="border border-gray-600 p-2 w-full rounded bg-gray-700 text-gray-200" placeholder="Type your question" required>
+      </div>
+      <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded w-full font-semibold">Ask</button>
+    </form>
+
+    <div id="answerBox" class="mt-6 bg-gray-800 p-5 rounded-xl shadow-lg hidden">
+      <h2 class="font-bold mb-2 text-white">Answer:</h2>
+      <p id="answerText" class="text-gray-200"></p>
+    </div>
+</div>
+
+<script>
+document.getElementById('chatForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const fileInput = document.getElementById('pdfFile');
+    const question = document.getElementById('question').value;
+    const token = localStorage.getItem("jwtToken");
+
+    if (!fileInput.files.length) return alert("Please select a PDF");
+
+    const formData = new FormData();
+    formData.append('file', fileInput.files[0]);
+    formData.append('question', question);
+
+    try {
+        const res = await fetch('/chat/answer', {
+            method: 'POST',
+            headers: {'Authorization': 'Bearer ' + token},
+            body: formData
+        });
+        const data = await res.json();
+        const answerBox = document.getElementById('answerBox');
+        const answerText = document.getElementById('answerText');
+        answerBox.classList.remove('hidden');
+        answerText.textContent = data.answer || JSON.stringify(data);
+    } catch (err) {
+        alert("Error: " + err);
+    }
+});
+</script>
+</body>
+</html>

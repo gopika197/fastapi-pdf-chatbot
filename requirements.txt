@@ -1,0 +1,10 @@
+fastapi
+uvicorn[standard]
+python-multipart
+PyPDF2
+requests
+python-dotenv
+SQLAlchemy
+passlib[bcrypt]
+PyJWT
+cachetools

@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Sign Up{% endblock %}
+{% block content %}
+<div class="w-full max-w-sm bg-gray-800 p-8 rounded-lg shadow-lg">
+    <h1 class="text-2xl font-bold mb-6 text-center">Sign Up</h1>
+    <form method="POST" action="/user/signup" class="space-y-4">
+        <input type="email" name="email" placeholder="Email"
+               class="w-full p-3 rounded bg-gray-700 text-white focus:outline-none" required>
+        <input type="password" name="password" placeholder="Password"
+               class="w-full p-3 rounded bg-gray-700 text-white focus:outline-none" required>
+        <button type="submit" class="w-full p-3 bg-green-600 rounded hover:bg-green-500 font-semibold">
+            Sign Up
+        </button>
+    </form>
+    <p class="mt-4 text-center text-gray-400">
+        Already have an account? <a href="/login" class="text-blue-400 hover:underline">Login</a>
+    </p>
+</div>
+{% endblock %}
