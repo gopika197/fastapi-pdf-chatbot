@@ -10,8 +10,42 @@ This scaffold includes:
 - Simple SQLite user store (SQLAlchemy)
 - Caching (in-memory with TTL)
 - Dockerfile
+🚀 Features
 
-## Quick start (local)
+✅ Upload and process PDF files
+✅ Extract and store embeddings in FAISS vector store
+✅ Query the document content with natural language
+✅ Stream responses using an LLM (Hugging Face)
+✅ Modular and scalable backend with FastAPI
+
+Project Structure 
+fastapi-pdf-chatbot/
+│
+├── app/
+│   ├── main.py                 # FastAPI entry point
+│   ├── routes/
+│   │   └── chat.py             # Chat and upload endpoints
+│   ├── core/
+│   │   ├── config.py           # Environment configurations
+│   │   ├── llm_service.py      # sak_llm() and LLM interaction logic
+│   │   └── pdf_service.py      # PDF parsing and embedding logic
+│   ├── utils/
+│   │   └── vector_store.py     # FAISS vector database logic
+│   ├── models/
+│   │   └── schemas.py          # Pydantic models for requests/responses
+│   └── __init__.py
+│
+├── data/
+│   └── uploads/                # Folder to store uploaded PDFs
+│
+├── requirements.txt
+└── README.md
+
+⚙️ Installation
+1️⃣ Clone the repository
+git clone https://github.com/yourusername/fastapi-pdf-chatbot.git
+cd fastapi-pdf-chatbot
+
 1. Create a virtual environment:
    ```bash
    python -m venv .venv
