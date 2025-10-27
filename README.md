@@ -74,3 +74,48 @@ cd fastapi-pdf-chatbot
 ## Notes
 - This project uses the Hugging Face Inference API; you can use a free-tier HF account and models.
 - For production, make sure to use HTTPS and a persistent DB.
+
+🧩 LLM API — Hugging Face Inference API
+
+This project uses the Hugging Face Inference API for text-based reasoning over extracted PDF content.
+Model chosen: Falcon-7B-Instruct
+
+🧠 Why Falcon-7B-Instruct?
+
+Open-weight model with strong reasoning and summarization ability.
+
+Fast inference via Hugging Face Inference endpoint.
+
+Supports context-driven Q&A, suitable for summarizing PDFs and answering domain-specific questions.
+
+🧠 Endpoints Overview
+🧍 Authentication Routes
+1. Signup
+
+POST /user/signup
+
+Request (Form data):
+{
+  "email": "user@example.com",
+  "password": "mypassword"
+}
+
+2. Login
+
+POST /user/login
+{
+  "email": "user@example.com",
+  "password": "mypassword"
+}
+
+📂 File Upload & Chat Routes
+3. Ask a Question
+
+POST /chat/answer
+
+Request (Form data):
+| Field      | Type   | Description                  |
+| ---------- | ------ | ---------------------------- |
+| `file`     | File   | The PDF file to analyze      |
+| `question` | String | The question you want to ask |
+
